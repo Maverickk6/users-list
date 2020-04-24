@@ -1,16 +1,25 @@
-import 'package:flutter/material.dart';
+class User {
+  int id;
+  String name, email, username, phone;
 
 
-class Details extends StatelessWidget {
+  User(this.id, this.name, this.email, this.username, this.phone);
 
-  final Details details;
-  
-  Details({Key key, @required this.details}) : super(key: key);
-  
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
+
+
+ User.fromJson(Map json)
+     : id = json['id'],
+  name = json['name'],
+  email = json['email'],
+ username = json['username'],
+ phone = json['phone'];
+
+ Map toJson() {
+   return{'id': id, 'name': name, 'email': email,'username': username, 'phone': phone};
+ }
+
+
+
+
+
 }

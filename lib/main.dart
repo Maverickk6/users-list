@@ -1,83 +1,140 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:convert';
 
-void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: new HomePage(),
-    ));
+import 'package:flutter/material.dart';
+import 'package:my_api/api.dart';
+import 'package:my_api/details.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => new _HomePageState();
+void main() {
+  runApp(MyApp());
 }
 
-class _HomePageState extends State<HomePage> {
-  List data;
-  Future<String> getData() async {
-    http.Response response = await http.get(
-        Uri.encodeFull('https://jsonplaceholder.typicode.com/users'),
-        headers: {"Accept": "application/json"});
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: UsersListScreen(),
+    );
+  }
+}
 
-    setState(() {
-      data = json.decode(response.body);
+class UsersListScreen extends StatefulWidget {
+  @override
+  _UsersListScreenState createState() => _UsersListScreenState();
+}
+
+class _UsersListScreenState extends State<UsersListScreen> {
+  var users = new List<User>();
+
+  _getUsers() {
+    API.getUsers().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        users = list.map((model) => User.fromJson(model)).toList();
+      });
     });
-    print(data[1]["name"]);
-    return "Success";
   }
 
   @override
   void initState() {
     super.initState();
-    this.getData();
+    _getUsers();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+//    throw UnimplementedError();
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal[200],
-        title: Text('Users List'),
+        title: Center(child: Text('My Contacts')),
       ),
-      body: ListView.builder(
-        itemCount: data == null ? 0 : data.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 1.0),
-              child: ListTile(
-                onTap: () {
+      body: Card(
+        child: ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              return Card(
+                margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
 
-                },
-                leading: CircleAvatar(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+                                child: ListTile(
+                    leading: CircleAvatar(
                   backgroundImage: NetworkImage(
                       'https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg'),
                 ),
-                title: Text('Name: \n' + data[index]['name'],
-                    style: TextStyle(
-                        fontFamily: 'Source Sans Pro', fontSize: 15.0)),
-                trailing: Column(
-                  children: <Widget>[
-                    Container(
-                      width: 200.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical:8.0),
-                        child: Text('email: \n'+
-                          data[index]['email'],
-                          style: TextStyle(
-                              fontFamily: 'Source Sans Pro', fontSize: 14.0),
-                        ),
-                      ),
-                    ),
-                  ],
+                    title: Text(users[index].name, style: TextStyle(fontFamily: 'Source Sans Pro',),),
+                    subtitle: Text(users[index].email),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailScreen(),
+                            settings: RouteSettings(
+                                arguments: users[index],
+                            ),
+                          ));
+                    }),
+                              ),
+              );
+            }),
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+//    throw UnimplementedError();
+    final User user = ModalRoute.of(context).settings.arguments;
+
+    return Scaffold(
+      body: new Center(
+        child: Card(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(radius: 150.0,
+                  backgroundImage: NetworkImage(
+                      'https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg'),
                 ),
+              SizedBox(height: 25.0),
+              new Text(
+                'Name: ' + user.name,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
               ),
-            ),
-          );
-        },
+              SizedBox(height: 10.0),
+              new Text(
+                ' Username: ' + user.username,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+              ),
+              SizedBox(height: 10.0),
+              new Text(
+                'Email: ' + user.email,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+              ),
+              SizedBox(height: 10.0),
+              new Text(
+                'Phone: ' + user.phone,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
