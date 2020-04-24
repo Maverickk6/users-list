@@ -64,27 +64,33 @@ class _UsersListScreenState extends State<UsersListScreen> {
             itemBuilder: (context, index) {
               return Card(
                 margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
-
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
-                                child: ListTile(
-                    leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://scx2.b-cdn.net/gfx/news/hires/2018/1-detectingfak.jpg'),
-                ),
-                    title: Text(users[index].name, style: TextStyle(fontFamily: 'Source Sans Pro',),),
-                    subtitle: Text(users[index].email),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailScreen(),
-                            settings: RouteSettings(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 4.0),
+                  child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30.0,
+                        backgroundImage: NetworkImage(
+                            'https://scx2.b-cdn.net/gfx/news/hires/2018/1-detectingfak.jpg'),
+                      ),
+                      title: Text(
+                        users[index].name,
+                        style: TextStyle(
+                          fontFamily: 'Source Sans Pro',
+                        ),
+                      ),
+                      subtitle: Text(users[index].email),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailScreen(),
+                              settings: RouteSettings(
                                 arguments: users[index],
-                            ),
-                          ));
-                    }),
                               ),
+                            ));
+                      }),
+                ),
               );
             }),
       ),
@@ -99,38 +105,44 @@ class DetailScreen extends StatelessWidget {
     final User user = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.teal[200],
+        title: Center(child: Text(user.name)),),
       body: new Center(
         child: Card(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(radius: 150.0,
-                  backgroundImage: NetworkImage(
-                      'https://scx2.b-cdn.net/gfx/news/hires/2018/1-detectingfak.jpg'),
-                ),
+              CircleAvatar(
+                radius: 150.0,
+                backgroundImage: NetworkImage(
+                    'https://scx2.b-cdn.net/gfx/news/hires/2018/1-detectingfak.jpg'),
+              ),
               SizedBox(height: 25.0),
               new Text(
                 'Name: ' + user.name,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+                style: TextStyle(
+                    fontFamily: 'Source Sans Pro',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30.0),
               ),
               SizedBox(height: 10.0),
               new Text(
                 ' Username: ' + user.username,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0, fontFamily: 'Source Sans Pro'),
               ),
               SizedBox(height: 10.0),
               new Text(
                 'Email: ' + user.email,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, fontFamily: 'Source Sans Pro'),
               ),
               SizedBox(height: 10.0),
               new Text(
                 'Phone: ' + user.phone,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, fontFamily: 'Source Sans Pro'),
               ),
             ],
           ),
