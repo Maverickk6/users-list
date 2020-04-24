@@ -70,7 +70,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
                                 child: ListTile(
                     leading: CircleAvatar(
                   backgroundImage: NetworkImage(
-                      'https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg'),
+                      'https://scx2.b-cdn.net/gfx/news/hires/2018/1-detectingfak.jpg'),
                 ),
                     title: Text(users[index].name, style: TextStyle(fontFamily: 'Source Sans Pro',),),
                     subtitle: Text(users[index].email),
@@ -106,7 +106,7 @@ class DetailScreen extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(radius: 150.0,
                   backgroundImage: NetworkImage(
-                      'https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg'),
+                      'https://scx2.b-cdn.net/gfx/news/hires/2018/1-detectingfak.jpg'),
                 ),
               SizedBox(height: 25.0),
               new Text(
