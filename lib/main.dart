@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'My Contacts',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -55,7 +55,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
 //    throw UnimplementedError();
     return new Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal[200],
+        backgroundColor: Colors.teal[400],
         title: Center(child: Text('My Contacts')),
       ),
       body: Card(
@@ -105,8 +105,12 @@ class DetailScreen extends StatelessWidget {
     final User user = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.teal[200],
-        title: Center(child: Text(user.name)),),
+      appBar: AppBar(
+        backgroundColor: Colors.teal[400],
+        title: Center(
+          child: Center(child: Text(user.name)),
+        ),
+      ),
       body: new Center(
         child: Card(
           child: Column(
@@ -130,19 +134,28 @@ class DetailScreen extends StatelessWidget {
               new Text(
                 ' Username: ' + user.username,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0, fontFamily: 'Source Sans Pro'),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                    fontFamily: 'Source Sans Pro'),
               ),
               SizedBox(height: 10.0),
               new Text(
                 'Email: ' + user.email,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, fontFamily: 'Source Sans Pro'),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30.0,
+                    fontFamily: 'Source Sans Pro'),
               ),
               SizedBox(height: 10.0),
               new Text(
                 'Phone: ' + user.phone,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, fontFamily: 'Source Sans Pro'),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30.0,
+                    fontFamily: 'Source Sans Pro'),
               ),
             ],
           ),
